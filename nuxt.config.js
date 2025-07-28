@@ -1,70 +1,81 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - Nathaniel Sanchez',
+    titleTemplate: '%s - Sanchez, Nathaniel E',
     title: 'QR Code Scanner',
-    htmlAttrs: { lang: 'en' },
+    htmlAttrs: {
+      lang: 'en'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
 
-  css: [],
-
-  plugins: [
-    { src: '~/plugins/html5-qrcode.js', mode: 'client' }
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: [
   ],
 
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [
+    { src: '~/plugins/html5-qrcode.client.js', mode: 'client' }
+  ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
 
+  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+  '@nuxtjs/axios',
+  '@nuxtjs/auth-next'
   ],
-
-  axios: {
-    baseURL: '/', // Change this if using a specific API
+auth: {
+  redirect: {
+    login: '/auth/signin/',           //redirect user when not connected
+    logout: '/auth/signin/',          //redirect user when logout
+    callback: '/auth/callback/',      //callback url after login
+    home: '/',                        //after login redirect
   },
-
-  auth: {
-    redirect: {
-      login: '/auth/signin/',
-      logout: '/auth/signin/',
-      callback: '/auth/callback/',
-      home: '/',
-    },
-    strategies: {
-      google: {
-        clientId: '43324794913-7529qhs598pubk3cunpale2tdkkk1jhl.apps.googleusercontent.com',
-        scheme: 'oauth2',
-        endpoints: {
-          authorization: 'https://accounts.google.com/o/oauth2/auth',
-          userinfo: 'https://www.googleapis.com/oauth2/v3/userinfo',
-        },
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 1800,
-        },
-        responseType: 'token id_token',
-        scope: ['openid', 'profile', 'email'],
-        redirectUri: process.env.REDIRECT_URI || 'http://localhost:3000/auth/callback',
-        codeChallengeMethod: '',
-      }
+  autofetchUser: false,
+  strategies: {
+    google: {
+      clientId: '43324794913-7529qhs598pubk3cunpale2tdkkk1jhl.apps.googleusercontent.com',
+      scheme: 'oauth2',
+      endpoints: {
+        authorization: "https://accounts.google.com/o/oauth2/auth",
+        userinfo: "https://www.googleapis.com/oauth2/v3/userinfo",
+      },
+      token:{
+        property: "access_token",
+        type: "Bearer",
+        maxAge: 1800,
+      },
+      responseType: "token id_token",
+      scope: ["openid", "profile", "email"],
+      redirectUri: process.env.REDIRECT_URI,
+      codeChallengeMethod: "",
     }
-  },
+  }
+},
 
+
+  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -83,5 +94,7 @@ export default {
     }
   },
 
-  build: {}
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {
+  }
 }
