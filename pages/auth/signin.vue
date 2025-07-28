@@ -3,14 +3,7 @@
     <v-card max-width="800" class="pa-15 mx-auto" elevation="12">
       <v-card-title class="justify-center text-h3">Sign in</v-card-title>
 
-      <!-- ✅ Show logged-in Discord user -->
-      <div v-if="$auth.loggedIn && $auth.user.username">
-        <v-alert type="success" class="mb-4">
-          Logged in as: {{ $auth.user.username }}#{{ $auth.user.discriminator }}
-        </v-alert>
-      </div>
-
-      <v-form v-else>
+      <v-form>
         <v-card-text>
           <v-text-field
             label="Email"
@@ -60,21 +53,6 @@
             Sign in with Google
           </v-btn>
         </v-card-actions>
-
-        <!-- ✅ Discord Sign-in Button -->
-        <v-card-actions class="justify-center">
-          <v-btn
-            color="indigo"
-            class="ma-2"
-            style="font-size: 1.1rem; padding: 12px 24px; text-transform: none;"
-            rounded="xl"
-            block
-            @click="signInWithDiscord()"
-          >
-            <v-icon left>mdi-discord</v-icon>
-            Sign in with Discord
-          </v-btn>
-        </v-card-actions>
       </v-form>
     </v-card>
   </div>
@@ -87,9 +65,6 @@ export default {
   methods: {
     signInWithGoogle() {
       this.$auth.loginWith('google')
-    },
-    signInWithDiscord() {
-      this.$auth.loginWith('discord')
     }
   }
 }

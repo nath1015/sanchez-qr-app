@@ -59,23 +59,8 @@ export default {
         },
         responseType: 'token id_token',
         scope: ['openid', 'profile', 'email'],
-        redirectUri: process.env.REDIRECT_URI || 'http://localhost:3000/auth/callback/',
+        redirectUri: process.env.REDIRECT_URI || 'http://localhost:3000/auth/callback',
         codeChallengeMethod: '',
-      },
-      discord: {
-        scheme: 'oauth2',
-        endpoints: {
-          authorization: 'https://discord.com/api/oauth2/authorize',
-          userInfo: 'https://discord.com/api/users/@me',
-        },
-        scope: ['identify', 'email'],
-        responseType: 'token',
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-        },
-        clientId: '1398649385901883534',
-        redirectUri: 'http://localhost:3000/auth/discord/callback',
       }
     }
   },
